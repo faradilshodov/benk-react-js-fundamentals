@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import { useEffect, useState } from "react";
 import ComponentTwo from "./componentTwo";
 import { ComponentThree, ComponentFour } from "./componentTwo";
 import styled from "styled-components";
@@ -13,9 +14,40 @@ const MyRedParagraph = styled.p`
     }
 `;
 
-let lastName: string = "DILSHODOV"
+interface apiCoffeeResponseStructure {
+    description: string,
+    id: number,
+    image: string,
+    ingredients: Array<string>,
+    title: string,
+};
 
-export default function CoffeeTextComponent(){
+let lastName: string = "DILSHODOV";
+
+const apiLink = "https://api.sampleapis.com/coffee/iced";
+
+export default function CoffeeTextComponent({title}: apiCoffeeResponseStructure){
+
+    const [data, setData] = useState<Object[]>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response: Response = await fetch(apiLink);
+                const responseJSON: Object[] = await response.json();
+                // responseJSON.map((coffee) => {
+                //     console.log(coffee.title);
+                // });
+
+                setData(responseJSON);
+            } catch (error: any) {
+                console.log(error);    
+            };
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <>
             <MyRedParagraph>
@@ -25,6 +57,10 @@ export default function CoffeeTextComponent(){
             <ComponentTwo/>
             <ComponentThree propOne={lastName}/>
             <ComponentFour/>
+            <br />
+            {data?.map((coffee) => (
+                <p>{coffee.title}</p>
+            ))}
         </>
     );
 };
