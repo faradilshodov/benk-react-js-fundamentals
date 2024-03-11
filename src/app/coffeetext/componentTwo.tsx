@@ -3,7 +3,7 @@ export default function CoffeeTextComponent() {
 }
 
 interface ComponentThreePropTypes {
-    propOne: string
+    propOne: string;
 }
 
 export function ComponentThree({propOne} : ComponentThreePropTypes) {

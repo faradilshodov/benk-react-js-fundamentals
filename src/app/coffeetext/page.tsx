@@ -14,33 +14,29 @@ const MyRedParagraph = styled.p`
     }
 `;
 
-interface apiCoffeeResponseStructure {
-    description: string,
-    id: number,
-    image: string,
-    ingredients: Array<string>,
-    title: string,
+interface ApiCoffeeResponseStructure {
+    description: string;
+    id: number;
+    image: string;
+    ingredients: Array<string>;
+    title: string;
 };
 
 let lastName: string = "DILSHODOV";
 
 const apiLink = "https://api.sampleapis.com/coffee/iced";
 
-export default function CoffeeTextComponent({title}: apiCoffeeResponseStructure){
+export default function CoffeeTextComponent(){
 
-    const [data, setData] = useState<Object[]>();
+    const [data, setData] = useState<ApiCoffeeResponseStructure[]>();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response: Response = await fetch(apiLink);
-                const responseJSON: Object[] = await response.json();
-                // responseJSON.map((coffee) => {
-                //     console.log(coffee.title);
-                // });
-
+                const responseJSON: Object[] = await response.json() as ApiCoffeeResponseStructure[];
                 setData(responseJSON);
-            } catch (error: any) {
+            } catch (error: unknown) {
                 console.log(error);    
             };
         };
@@ -59,7 +55,7 @@ export default function CoffeeTextComponent({title}: apiCoffeeResponseStructure)
             <ComponentFour/>
             <br />
             {data?.map((coffee) => (
-                <p>{coffee.title}</p>
+                <p key={coffee.id}>{coffee.title}</p>
             ))}
         </>
     );
