@@ -45,14 +45,16 @@ export default function CoffeeImageComponent() {
     }, []);
 
     return (
-        <ImagesContainer>
-            {/* <h2>Coffee Images Will Go Here</h2> */}
-            {data.map((coffee) => (
-                <div key={coffee.id}> 
-                    <h3>{coffee.title}</h3>
-                    <CoffeeImage src={coffee.image} alt={`Coffee ${coffee.id}`} />
-                </div>
-            ))}
-        </ImagesContainer>
+        <>
+            <h2>Coffee Images Will Go Here</h2>
+            <ImagesContainer>
+                {data.map((coffee) => (
+                    <div key={coffee.id}> 
+                        <h3>{coffee.title}</h3>
+                        <CoffeeImage src={coffee.image} alt={`Coffee ${coffee.id}`} />
+                    </div>
+                ))}
+            </ImagesContainer>
+        </>
     );
 }
